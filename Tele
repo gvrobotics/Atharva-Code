@@ -29,8 +29,8 @@ public class Tele extends OpMode
 
         BR.setDirection(DcMotorSimple.Direction.REVERSE);
         BL.setDirection(DcMotorSimple.Direction.FORWARD);
-        FR.setDirection(DcMotorSimple.Direction.REVERSE);
-        FL.setDirection(DcMotorSimple.Direction.FORWARD);
+        FR.setDirection(DcMotorSimple.Direction.FORWARD);
+        FL.setDirection(DcMotorSimple.Direction.REVERSE);
         Shoot.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -66,8 +66,8 @@ public class Tele extends OpMode
     public void loop()
     {
         powerLX = gamepad1.left_stick_x/1.4;
-        powerLY = gamepad1.left_stick_y/1.4;
-        powerRX = gamepad1.right_stick_x/1.4;
+        powerLY = gamepad1.right_stick_x/1.4;
+        powerRX = gamepad1.left_stick_y/1.4;
         powerRY = gamepad1.right_stick_y/1.4;
 
 
@@ -106,10 +106,10 @@ public class Tele extends OpMode
 
 
 
-        lf = (PowerMultiplier*Math.sin(robotAngle+(Math.PI/4))) - powerRX;
-        rb = (PowerMultiplier*Math.sin(robotAngle+(Math.PI/4))) + powerRX;
-        lb = (PowerMultiplier*-1*(Math.sin(robotAngle-(Math.PI/4)))) - powerRX;
-        rf = (PowerMultiplier*-1*(Math.sin(robotAngle-(Math.PI/4)))) + powerRX;
+        lf = (PowerMultiplier*Math.sin(robotAngle-(Math.PI/4))) - powerRX;
+        rb = (PowerMultiplier*Math.sin(robotAngle-(Math.PI/4))) + powerRX;
+        lb = (PowerMultiplier*-1*(Math.sin(robotAngle+(Math.PI/4)))) - powerRX;
+        rf = (PowerMultiplier*-1*(Math.sin(robotAngle+(Math.PI/4)))) + powerRX;
 
 
 
