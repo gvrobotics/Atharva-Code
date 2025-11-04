@@ -3,12 +3,17 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
 public class Tele extends OpMode
 {
     public DcMotor BR, BL, FR, FL, Shoot, Intake;
     private double powerRY, powerRX, powerLX, powerLY, robotAngle, PowerMultiplier, lf, rb, rf, lb;
+    public Servo push;
+    private ElapsedTime timer = new ElapsedTime();
+    private Boolean motorOn = false, t = false, previousGamepad = false, currentGamepad = false;
 
     @Override
     public void init()
@@ -19,6 +24,8 @@ public class Tele extends OpMode
         FL = hardwareMap.get(DcMotor.class, "FL");
         Shoot = hardwareMap.get(DcMotor.class, "S");
         Intake = hardwareMap.get(DcMotor.class, "I");
+        push = hardwareMap.get(Servo.class, "P");
+
 
 
 
@@ -33,6 +40,7 @@ public class Tele extends OpMode
         FL.setDirection(DcMotorSimple.Direction.REVERSE);
         Shoot.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        push. setDirection(Servo.Direction.REVERSE);
 
 
 
@@ -57,6 +65,8 @@ public class Tele extends OpMode
         FL.setPower(0);
         Shoot.setPower(0);
         Intake.setPower(0);
+        push.setPosition(0.6);
+
     }
 
 
@@ -118,7 +128,16 @@ public class Tele extends OpMode
         BL.setPower(lb);
         FR.setPower(rf);
         FL.setPower(lf);
-
+        if (gamepad1.x && !t) {
+            // When Y is pressed, flip down
+            push.setPosition(1.4);
+            timer.reset();
+            t = true;
+        } else if (t && !gamepad1.x &&timer.seconds() > 0.3) {
+            // After Y is released for 0.1s, flip back up
+            push.setPosition(0.6);
+            t = false;
+        }
 
         if (gamepad1.right_bumper){
             Shoot.setPower(0.5);
